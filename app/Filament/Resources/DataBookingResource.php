@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\DataBookingResource\Pages;
-use App\Models\DataBooking;
-use App\Models\User;
-use App\Models\JamAntrian;
-use App\Models\TanggalAntrian;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\User;
 use Filament\Tables;
+use Filament\Forms\Form;
+use App\Models\JamAntrian;
 use Filament\Tables\Table;
+use App\Models\DataBooking;
+use App\Models\TanggalAntrian;
+use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Auth;
+use App\Filament\Resources\DataBookingResource\Pages;
 
 class DataBookingResource extends Resource
 {
@@ -19,6 +20,10 @@ class DataBookingResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
     protected static ?string $navigationLabel = 'Data Booking';
     protected static ?string $navigationGroup = 'Booking';
+    public static function canAccess(): bool
+    {
+        return Auth::user()?->roles->pluck('name')->contains('admin');
+    }
 
     public static function form(Form $form): Form
     {

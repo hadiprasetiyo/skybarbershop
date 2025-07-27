@@ -2,22 +2,23 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\WaktuAntrianResource\Pages;
-use App\Filament\Resources\WaktuAntrianResource\RelationManagers;
+use Filament\Forms;
+use Filament\Tables;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
 use App\Models\WaktuAntrian;
 use App\Models\TanggalAntrian;
-use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Auth;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\HasManyRepeater;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
-
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\HasManyRepeater;
+
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\WaktuAntrianResource\Pages;
+use App\Filament\Resources\WaktuAntrianResource\RelationManagers;
 
 class WaktuAntrianResource extends Resource
 {
@@ -27,6 +28,10 @@ protected static ?string $navigationIcon = 'heroicon-o-clock';
     protected static ?string $navigationLabel = 'Waktu Antrian';
     protected static ?string $pluralModelLabel = 'Waktu Antrian';
     protected static ?string $modelLabel = 'Waktu Antrian';
+    public static function canAccess(): bool
+    {
+        return Auth::user()?->roles->pluck('name')->contains('admin');
+    }
 
     public static function form(Form $form): Form
     {
