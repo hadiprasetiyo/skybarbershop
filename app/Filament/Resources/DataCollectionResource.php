@@ -2,23 +2,28 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\DataCollectionResource\Pages;
-use App\Filament\Resources\DataCollectionResource\RelationManagers;
-use App\Models\DataCollection;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\DataCollection;
+use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\FileUpload;
+use App\Filament\Resources\DataCollectionResource\Pages;
+use App\Filament\Resources\DataCollectionResource\RelationManagers;
 
 class DataCollectionResource extends Resource
 {
     protected static ?string $model = DataCollection::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function canAccess(): bool
+    {
+        return Auth::user()?->roles->pluck('name')->contains('admin');
+    }
 
     public static function form(Form $form): Form
     {
@@ -39,11 +44,12 @@ class DataCollectionResource extends Resource
                 ->label('Gambar Model')
                 ->image()
                 ->directory('data-collection')
-                ->imagePreviewHeight('200')
+                ->imagePreviewHeight(200)
                 ->maxSize(1024) // dalam KB
-                ->disk('public')
-                ->required()
+                ->disk('public') // menyimpan ke storage/app/public
                 ->preserveFilenames()
+                ->required(fn (string $context): bool => $context === 'create') // hanya wajib saat create
+                ->nullable()
             ]);
     }
 
