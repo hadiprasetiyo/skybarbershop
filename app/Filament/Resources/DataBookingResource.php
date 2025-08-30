@@ -29,16 +29,6 @@ class DataBookingResource extends Resource
     protected static ?string $navigationLabel = 'Data Booking';
     protected static ?string $navigationGroup = 'Booking';
 
-    public $availableSlots = [];
-
-    public function mount(): void
-    {
-        
-        $this->availableSlots = JamAntrian::with('tanggalAntrian')
-            ->whereDoesntHave('bookings')
-            ->get();
-    }
-
     public static function canAccess(): bool
     {
         return Auth::user()?->roles->pluck('name')->contains('admin');
@@ -55,8 +45,17 @@ class DataBookingResource extends Resource
 
                 Select::make('jam_antrian_id')
                     ->label('Tanggal & Jam')
-                    ->relationship('jamAntrian', 'slot_jam')
-                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->tanggalAntrian->slot_tanggal . ' - ' . $record->slot_jam)
+                    ->relationship(
+                        name: 'jamAntrian',
+                        titleAttribute: 'slot_jam',
+                        modifyQueryUsing: fn ($query) => $query
+                            ->whereDoesntHave('bookings') // ambil slot yang belum dibooking
+                            ->with('tanggalAntrian')      // include relasi tanggal
+                    )
+                    ->getOptionLabelFromRecordUsing(
+                        fn ($record) => $record->tanggalAntrian->slot_tanggal . ' - ' . $record->slot_jam
+                    )
+                    ->searchable()
                     ->required(),
 
                 Select::make('status')
