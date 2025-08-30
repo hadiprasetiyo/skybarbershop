@@ -28,6 +28,17 @@ class DataBookingResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
     protected static ?string $navigationLabel = 'Data Booking';
     protected static ?string $navigationGroup = 'Booking';
+
+    public $availableSlots = [];
+
+    public function mount(): void
+    {
+        
+        $this->availableSlots = JamAntrian::with('tanggalAntrian')
+            ->whereDoesntHave('bookings')
+            ->get();
+    }
+
     public static function canAccess(): bool
     {
         return Auth::user()?->roles->pluck('name')->contains('admin');
