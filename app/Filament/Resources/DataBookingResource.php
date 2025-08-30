@@ -40,14 +40,12 @@ class DataBookingResource extends Resource
                 Select::make('user_id')
                     ->label('Pelanggan')
                     ->relationship('user', 'name')
-                    ->searchable()
                     ->required(),
 
                 Select::make('jam_antrian_id')
                     ->label('Tanggal & Jam')
                     ->relationship('jamAntrian', 'slot_jam')
                     ->getOptionLabelFromRecordUsing(fn ($record) => $record->tanggalAntrian->slot_tanggal . ' - ' . $record->slot_jam)
-                    ->searchable()
                     ->required(),
 
                 Select::make('status')
