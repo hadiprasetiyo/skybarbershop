@@ -27,5 +27,10 @@ class DataCollection extends Model
         return $this->hasMany(DataBooking::class, 'data_collection_id');
     }
 
+    public function getHargaRupiahAttribute()
+    {
+        return 'Rp ' . number_format($this->harga, 0, ',', '.');
+    }
+
 }
 

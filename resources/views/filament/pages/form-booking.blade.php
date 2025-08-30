@@ -4,24 +4,46 @@
             <h2 class="text-xl font-bold mb-4">
                 Booking: {{ $this->modelPotongan->nama_model }}
             </h2>
+
+            {{-- Gambar Model --}}
             <img src="{{ asset('storage/'.$this->modelPotongan->gambar) }}" 
                 class="w-48 h-48 object-cover rounded mb-4 mx-auto">
 
-            <form wire:submit.prevent="saveBooking">
-                <div class="mb-4">
-                    <label class="block font-medium mb-2">Pilih Tanggal</label>
-                    <input type="date" wire:model="tanggal" class="border rounded p-2 w-full">
+            {{-- Harga --}}
+            <p class="text-gray-700 mb-4">
+                Harga: <strong>{{ $this->modelPotongan->harga_rupiah }}</strong>
+            </p>
+            {{-- Nama User Login --}}
+            <p class="text-gray-700 mb-4">
+                Pemesan: <strong>{{ $this->userName }}</strong>
+            </p>
+
+            {{-- Form Booking --}}
+            <form wire:submit.prevent="saveBooking" class="space-y-4">
+
+                {{-- Pilih Jam (dengan tanggal) --}}
+                <div>
+                    <label class="block font-medium">Pilih Jadwal</label>
+                    <select wire:model="jam" class="border rounded px-2 py-1 w-full">
+                        <option value="">-- pilih jadwal --</option>
+                        @foreach ($availableSlots as $slot)
+                            <option value="{{ $slot->id }}">
+                                {{ $slot->tanggalAntrian->slot_tanggal }} - {{ $slot->slot_jam }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
 
-                <div class="mb-4">
-                    <label class="block font-medium mb-2">Pilih Jam</label>
-                    <input type="time" wire:model="jam" class="border rounded p-2 w-full">
-                </div>
-
+                {{-- Submit Button --}}
                 <x-filament::button type="submit" color="primary">
                     Konfirmasi Booking
                 </x-filament::button>
             </form>
+
+            {{-- Notifikasi sukses --}}
+            @if(session()->has('success'))
+                <p class="text-green-600 mt-4">{{ session('success') }}</p>
+            @endif
         </div>
     @else
         <p class="text-red-500">Model tidak ditemukan.</p>
