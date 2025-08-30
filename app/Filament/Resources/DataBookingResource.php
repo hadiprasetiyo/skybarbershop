@@ -49,13 +49,12 @@ class DataBookingResource extends Resource
                         name: 'jamAntrian',
                         titleAttribute: 'slot_jam',
                         modifyQueryUsing: fn ($query) => $query
-                            ->whereDoesntHave('bookings') // ambil slot yang belum dibooking
-                            ->with('tanggalAntrian')      // include relasi tanggal
+                            ->whereDoesntHave('bookings')
+                            ->with('tanggalAntrian')
                     )
                     ->getOptionLabelFromRecordUsing(
                         fn ($record) => $record->tanggalAntrian->slot_tanggal . ' - ' . $record->slot_jam
                     )
-                    ->searchable()
                     ->required(),
 
                 Select::make('status')
