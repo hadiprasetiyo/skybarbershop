@@ -49,8 +49,9 @@ class DataBookingResource extends Resource
                     ->searchable()
                     ->required(),
 
-                Select::make('jamAntrian.tanggalAntrian.slot_tanggal')
+                Select::make('tanggal_antrian_id')
                     ->label('Tanggal Antrian')
+                    ->relationship('tanggalAntrian', 'slot_tanggal')
                     ->searchable()
                     ->required(),
 
@@ -83,7 +84,7 @@ class DataBookingResource extends Resource
                 TextColumn::make('jamAntrian.slot_jam')
                     ->label('Jam'),
 
-                TextColumn::make('tanggalAntrian.slot_tanggal')
+                TextColumn::make('jamAntrian.slot_tanggal')
                     ->label('Tanggal'),
 
                 TextColumn::make('status')
