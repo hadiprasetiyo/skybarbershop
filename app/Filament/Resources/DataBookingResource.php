@@ -84,7 +84,7 @@ class DataBookingResource extends Resource
                 TextColumn::make('jamAntrian.slot_jam')
                     ->label('Jam'),
 
-                TextColumn::make('jamAntrian.slot_tanggal')
+                TextColumn::make('jamAntrian.tanggalAntrian.slot_tanggal')
                     ->label('Tanggal'),
 
                 TextColumn::make('status')
@@ -106,7 +106,7 @@ class DataBookingResource extends Resource
                     }),
 
                 TextColumn::make('collection.nama_model')
-                    ->label('Nama Pelanggan')
+                    ->label('Nama Model')
                     ->searchable()
                     ->sortable(),
             ])
