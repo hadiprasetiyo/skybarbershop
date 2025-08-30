@@ -12,7 +12,15 @@ use App\Models\DataBooking;
 use App\Models\TanggalAntrian;
 use Filament\Resources\Resource;
 use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
 use App\Filament\Resources\DataBookingResource\Pages;
+use App\Filament\Resources\DataBookingResource\Pages\EditDataBooking;
+use App\Filament\Resources\DataBookingResource\Pages\ListDataBookings;
+use App\Filament\Resources\DataBookingResource\Pages\CreateDataBooking;
 
 class DataBookingResource extends Resource
 {
@@ -29,25 +37,25 @@ class DataBookingResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
+                Select::make('user_id')
                     ->label('Pelanggan')
                     ->relationship('user', 'name')
                     ->searchable()
                     ->required(),
 
-                Forms\Components\Select::make('jam_antrian_id')
+                Select::make('jam_antrian_id')
                     ->label('Jam Antrian')
                     ->relationship('jamAntrian', 'slot_jam')
                     ->searchable()
                     ->required(),
 
-                Forms\Components\Select::make('tanggal_antrian_id')
+                Select::make('tanggal_antrian_id')
                     ->label('Tanggal Antrian')
                     ->relationship('tanggalAntrian', 'slot_tanggal')
                     ->searchable()
                     ->required(),
 
-                Forms\Components\Select::make('status')
+                Select::make('status')
                     ->label('Status')
                     ->options([
                         1 => 'Menunggu',
@@ -56,7 +64,7 @@ class DataBookingResource extends Resource
                         4 => 'Dibatalkan',
                     ]),
 
-                Forms\Components\Select::make('data_collection_id')
+                Select::make('data_collection_id')
                     ->label('Data Collection')
                     ->relationship('collection', 'nama_model')
                     ->default(1)
@@ -68,50 +76,47 @@ class DataBookingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
+                TextColumn::make('user.name')
                     ->label('Nama Pelanggan')
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('jamAntrian.jam')
+                TextColumn::make('jamAntrian.slot_jam')
                     ->label('Jam'),
 
-                Tables\Columns\TextColumn::make('tanggalAntrian.tanggal')
+                TextColumn::make('tanggalAntrian.slot_tanggal')
                     ->label('Tanggal'),
 
-                Tables\Columns\BadgeColumn::make('status')
+                TextColumn::make('status')
                     ->label('Status')
-                    ->formatStateUsing(function ($state) {
-                        return match ((int) $state) {
-                            1 => 'Menunggu',
-                            2 => 'Dikonfirmasi',
-                            3 => 'Selesai',
-                            4 => 'Dibatalkan',
-                            default => 'Tidak Diketahui',
-                        };
+                    ->badge()
+                    ->formatStateUsing(fn ($state) => match ((int) $state) {
+                        1 => 'Menunggu',
+                        2 => 'Dikonfirmasi',
+                        3 => 'Selesai',
+                        4 => 'Dibatalkan',
+                        default => 'Tidak Diketahui',
                     })
-                    ->color(function ($state) {
-                        return match ((int) $state) {
-                            1 => 'gray',
-                            2 => 'info',
-                            3 => 'success',
-                            4 => 'danger',
-                            default => 'secondary',
-                        };
-                      }),
+                    ->color(fn ($state) => match ((int) $state) {
+                        1 => 'gray',
+                        2 => 'info',
+                        3 => 'success',
+                        4 => 'danger',
+                        default => 'secondary',
+                    }),
 
-                Tables\Columns\TextColumn::make('collection.nama_model')
+                TextColumn::make('collection.nama_model')
                     ->label('Nama Pelanggan')
                     ->searchable()
                     ->sortable(),
             ])
             ->filters([])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                DeleteBulkAction::make(),
             ]);
     }
 
@@ -123,9 +128,9 @@ class DataBookingResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDataBookings::route('/'),
-            'create' => Pages\CreateDataBooking::route('/create'),
-            'edit' => Pages\EditDataBooking::route('/{record}/edit'),
+            'index' => ListDataBookings::route('/'),
+            'create' => CreateDataBooking::route('/create'),
+            'edit' => EditDataBooking::route('/{record}/edit'),
         ];
     }
 }
