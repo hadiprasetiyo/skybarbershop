@@ -14,9 +14,12 @@
                             Rp {{ number_format($item->harga, 0, ',', '.') }}
                         </span>
                     </div>
-                    <x-filament::button>
-                        Pilih Model
-                    </x-filament::button>
+            <x-filament::button
+                tag="a"
+                href="{{ route('filament.admin.pages.form-booking', ['model_id' => $item->id]) }}">
+                Pilih Model
+            </x-filament::button>
+
                 </div>
             </div>
         @endforeach

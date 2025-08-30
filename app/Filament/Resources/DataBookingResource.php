@@ -37,13 +37,13 @@ class DataBookingResource extends Resource
 
                 Forms\Components\Select::make('jam_antrian_id')
                     ->label('Jam Antrian')
-                    ->relationship('jamAntrian', 'jam')
+                    ->relationship('jamAntrian', 'slot_jam')
                     ->searchable()
                     ->required(),
 
                 Forms\Components\Select::make('tanggal_antrian_id')
                     ->label('Tanggal Antrian')
-                    ->relationship('tanggalAntrian', 'tanggal')
+                    ->relationship('tanggalAntrian', 'slot_tanggal')
                     ->searchable()
                     ->required(),
 
@@ -54,7 +54,11 @@ class DataBookingResource extends Resource
                         2 => 'Dikonfirmasi',
                         3 => 'Selesai',
                         4 => 'Dibatalkan',
-                    ])
+                    ]),
+
+                Forms\Components\Select::make('data_collection_id')
+                    ->label('Data Collection')
+                    ->relationship('collection', 'nama_model')
                     ->default(1)
                     ->required(),
             ]);
@@ -94,7 +98,12 @@ class DataBookingResource extends Resource
                             4 => 'danger',
                             default => 'secondary',
                         };
-    }),
+                      }),
+
+                Tables\Columns\TextColumn::make('collection.nama_model')
+                    ->label('Nama Pelanggan')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([])
             ->actions([

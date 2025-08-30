@@ -13,7 +13,7 @@ class DashboardUser extends Page
     protected static ?string $title = 'Dashboard';
     protected static ?string $navigationLabel = 'Dashboard';
 
-   public static function canAccess(): bool
+    public static function canAccess(): bool
     {
         return Auth::user()?->roles->pluck('name')->contains('pengguna');
     }
