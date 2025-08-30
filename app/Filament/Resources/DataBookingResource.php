@@ -44,14 +44,9 @@ class DataBookingResource extends Resource
                     ->required(),
 
                 Select::make('jam_antrian_id')
-                    ->label('Jam Antrian')
+                    ->label('Tanggal & Jam')
                     ->relationship('jamAntrian', 'slot_jam')
-                    ->searchable()
-                    ->required(),
-
-                Select::make('tanggal_antrian_id')
-                    ->label('Tanggal Antrian')
-                    ->relationship('tanggalAntrian', 'slot_tanggal')
+                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->tanggalAntrian->slot_tanggal . ' - ' . $record->slot_jam)
                     ->searchable()
                     ->required(),
 
