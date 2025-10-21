@@ -15,6 +15,7 @@ class DataBooking extends Model
     protected $fillable = [
         'user_id',
         'data_collection_id',
+        'capster_id',
         'jam_antrian_id',
         'tanggal_antrian_id',
         'status',
@@ -38,6 +39,11 @@ class DataBooking extends Model
     public function tanggalAntrian()
     {
         return $this->belongsTo(TanggalAntrian::class, 'tanggal_antrian_id');
+    }
+
+    public function capster()
+    {
+        return $this->belongsTo(Capster::class, 'capster_id');
     }
 }
 
