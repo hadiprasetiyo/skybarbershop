@@ -49,7 +49,7 @@ class TotalBookingWidget extends BaseWidget
                 ->color('success'),
 
             Stat::make('Booking Dibatalkan', $cancelDataBooking)
-                ->description('Dibatalkan pelanggan')
+                ->description('Dibatalkan Admin')
                 ->descriptionIcon('heroicon-m-x-circle')
                 ->color('danger'),
         ];
