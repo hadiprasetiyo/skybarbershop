@@ -9,6 +9,7 @@ use App\Models\DataCollection;
 use Illuminate\Support\Facades\Auth;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Illuminate\Support\Collection;
 
 class FormBooking extends Page
 {
@@ -18,7 +19,7 @@ class FormBooking extends Page
 
     public ?DataCollection $modelPotongan = null;
     public $availableSlots = [];
-    public $availableCapster = [];
+    public Collection $availableCapster;
     public $userId;
     public $userName;
     public $jam;
@@ -26,6 +27,7 @@ class FormBooking extends Page
 
     public function mount(): void
     {
+
         $this->userId = Auth::id();
         $this->userName = Auth::user()->name;
 
@@ -45,17 +47,17 @@ class FormBooking extends Page
             return $slot->bookings->unique('capster_id')->count() < $totalCapster;
         })->values();
 
-        $this->availableCapster = [];
+        $this->availableCapster = collect();
     }
 
     public function updatedJam($value)
     {
         if (!$value) {
-            $this->availableCapster = [];
-            return;
-        }
+        $this->availableCapster = collect();
+        return;
+    }
 
-        // ambil capster yang belum dibooking di jam itu
+            // ambil capster yang belum dibooking di jam itu
         $this->availableCapster = Capster::whereDoesntHave('bookings', function ($q) use ($value) {
             $q->where('jam_antrian_id', $value);
         })->get();

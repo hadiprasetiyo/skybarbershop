@@ -34,9 +34,14 @@
                 {{-- Pilih Capster --}}
                 <div>
                     <label class="block font-medium mb-1">Pilih Capster</label>
-                    <select wire:model="capster" class="border rounded px-2 py-1 w-full"
-                        @disabled(!$jam || $availableCapster->isEmpty())>
+
+                    <select 
+                        wire:model="capster" 
+                        class="border rounded px-2 py-1 w-full"
+                        @disabled(!$jam)
+                    >
                         <option value="">-- pilih capster --</option>
+
                         @foreach ($availableCapster as $cap)
                             <option value="{{ $cap->id }}">{{ $cap->name }}</option>
                         @endforeach
@@ -45,6 +50,10 @@
                     <div wire:loading wire:target="jam" class="text-sm text-gray-500 mt-1">
                         Memuat capster yang tersedia...
                     </div>
+
+                    @if($jam && $availableCapster->isEmpty())
+                        <p class="text-sm text-red-500 mt-1">Semua capster sudah dibooking di jam ini.</p>
+                    @endif
                 </div>
 
                 <x-filament::button type="submit" color="primary" class="w-full">
