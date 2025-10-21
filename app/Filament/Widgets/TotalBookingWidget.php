@@ -11,8 +11,8 @@ class TotalBookingWidget extends BaseWidget
     protected function getStats(): array
     {
         $totalDataBooking = DataBooking::count();
-        $monthlyDataBooking = DataBooking::whereMonth('tanggal', now()->month)
-            ->whereYear('tanggal', now()->year)
+        $monthlyDataBooking = DataBooking::whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
             ->count();
             
         $pendingDataBooking = DataBooking::where('status', '1')->count();
