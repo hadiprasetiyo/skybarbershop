@@ -1,6 +1,6 @@
 <x-filament-panels::page>
     @if($this->modelPotongan)
-        <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-2xl mx-auto min-w-[300px] max-w-[420px] w-full border border-gray-100">
+        <div class="bg-gradient-to-br from-white to-gray-50 p-6 rounded-2xl shadow-2xl mx-auto max-w-sm w-full border border-gray-100">
             <!-- Header -->
             <div class="text-center mb-6">
                 <h2 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
