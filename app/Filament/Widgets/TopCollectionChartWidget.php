@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class TopCollectionChartWidget extends ChartWidget
 {
-    protected static ?string $heading = 'Model Potongan Terfavorit Berdasarkan Jumlah Booking';
+    protected static ?string $heading = 'Top 10 Model Potongan Terfavorit Berdasarkan Jumlah Booking';
     protected static ?int $sort = 1;
     protected int | string | array $columnSpan = 'full';
 
