@@ -107,8 +107,7 @@ class UserBookingResource extends Resource
                 
                 TextColumn::make('capster.name')
                     ->label('Capster')
-                    ->searchable()
-                    ->sortable(),
+                    ->searchable(),
 
                 TextColumn::make('status')
                     ->label('Status')
