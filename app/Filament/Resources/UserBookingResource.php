@@ -27,7 +27,7 @@ class UserBookingResource extends Resource
 {
     protected static ?string $model = DataBooking::class;
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
-    protected static ?string $navigationLabel = 'Riawyat Booking';
+    protected static ?string $navigationLabel = 'Riwayat Booking';
     protected static ?string $navigationGroup = 'Booking';
     
     public static function getEloquentQuery(): Builder

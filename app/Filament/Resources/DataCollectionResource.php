@@ -30,7 +30,7 @@ class DataCollectionResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('nama_model')
-                ->label('Nama Model')
+                ->label('Services')
                 ->required()
                 ->maxLength(45),
 
@@ -58,7 +58,7 @@ class DataCollectionResource extends Resource
       return $table
         ->columns([
             Tables\Columns\TextColumn::make('nama_model')
-                ->label('Nama Model')
+                ->label('Services')
                 ->searchable()
                 ->sortable(),
 

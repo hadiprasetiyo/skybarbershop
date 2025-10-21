@@ -108,7 +108,7 @@ class DataBookingResource extends Resource
                     }),
 
                 TextColumn::make('collection.nama_model')
-                    ->label('Nama Model')
+                    ->label('Services')
                     ->searchable()
                     ->sortable(),
             ])
