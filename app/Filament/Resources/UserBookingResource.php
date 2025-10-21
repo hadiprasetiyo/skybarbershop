@@ -66,6 +66,12 @@ class UserBookingResource extends Resource
                     ->searchable()
                     ->required(),
 
+                Select::make('capster_id')
+                    ->label('Capster')
+                    ->relationship('capster', 'name')
+                    ->searchable()
+                    ->required(),
+
                 Select::make('status')
                     ->label('Status')
                     ->options([
@@ -98,6 +104,11 @@ class UserBookingResource extends Resource
                 // akses ke tanggal lewat jamAntrian
                 TextColumn::make('jamAntrian.tanggalAntrian.slot_tanggal')
                     ->label('Tanggal'),
+                
+                TextColumn::make('capster.name')
+                    ->label('Capster')
+                    ->searchable()
+                    ->sortable(),
 
                 TextColumn::make('status')
                     ->label('Status')
