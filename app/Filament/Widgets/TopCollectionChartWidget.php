@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class TopCollectionChartWidget extends ChartWidget
 {
-    protected static ?string $heading = 'Top Model Potongan yang Paling Banyak Dibooking';
+    protected static ?string $heading = 'Model Potongan Terfavorit Berdasarkan Jumlah Booking';
     protected static ?int $sort = 1;
     protected int | string | array $columnSpan = 'full';
 
@@ -79,6 +79,8 @@ class TopCollectionChartWidget extends ChartWidget
                         'font' => ['size' => 12, 'weight' => '500'],
                         'color' => '#6b7280',
                     ],
+                    'categoryPercentage' => 1, // nilai kecil = jarak antar bar lebih lebar
+                    'barPercentage' => 0.8, // nilai kecil = bar lebih tipis
                 ],
                 'y' => [
                     'beginAtZero' => true,
