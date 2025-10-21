@@ -5,25 +5,22 @@
                 Booking: {{ $this->modelPotongan->nama_model }}
             </h2>
 
-            {{-- Gambar Model --}}
             <img src="{{ asset('storage/'.$this->modelPotongan->gambar) }}" 
-                class="w-48 h-48 object-cover rounded mb-4 mx-auto">
+                 class="w-48 h-48 object-cover rounded mb-4 mx-auto">
 
-            {{-- Harga --}}
             <p class="text-gray-700 mb-4">
                 Harga: <strong>{{ $this->modelPotongan->harga_rupiah }}</strong>
             </p>
-            {{-- Nama User Login --}}
+
             <p class="text-gray-700 mb-4">
                 Pemesan: <strong>{{ $this->userName }}</strong>
             </p>
 
-            {{-- Form Booking --}}
             <form wire:submit.prevent="saveBooking" class="space-y-4">
 
-                {{-- Pilih Jam (dengan tanggal) --}}
+                {{-- Pilih Jam --}}
                 <div>
-                    <label class="block font-medium">Pilih Jadwal</label>
+                    <label class="block font-medium mb-1">Pilih Jadwal</label>
                     <select wire:model="jam" class="border rounded px-2 py-1 w-full">
                         <option value="">-- pilih jadwal --</option>
                         @foreach ($availableSlots as $slot)
@@ -33,16 +30,15 @@
                         @endforeach
                     </select>
                 </div>
+
                 {{-- Pilih Capster --}}
                 <div>
-                    <label class="block font-medium">Pilih Capster</label>
-
-                    <select wire:model="capster" class="border rounded px-2 py-1 w-full" @disabled(empty($availableCapster))>
+                    <label class="block font-medium mb-1">Pilih Capster</label>
+                    <select wire:model="capster" class="border rounded px-2 py-1 w-full"
+                        @disabled(!$jam || $availableCapster->isEmpty())>
                         <option value="">-- pilih capster --</option>
                         @foreach ($availableCapster as $cap)
-                            <option value="{{ $cap->id }}">
-                                {{ $cap->name }}
-                            </option>
+                            <option value="{{ $cap->id }}">{{ $cap->name }}</option>
                         @endforeach
                     </select>
 
@@ -51,18 +47,12 @@
                     </div>
                 </div>
 
-                {{-- Submit Button --}}
-                <x-filament::button type="submit" color="primary">
+                <x-filament::button type="submit" color="primary" class="w-full">
                     Konfirmasi Booking
                 </x-filament::button>
             </form>
-
-            {{-- Notifikasi sukses --}}
-            @if(session()->has('success'))
-                <p class="text-green-600 mt-4">{{ session('success') }}</p>
-            @endif
         </div>
     @else
-        <p class="text-red-500">Model tidak ditemukan.</p>
+        <p class="text-red-500 text-center">Model tidak ditemukan.</p>
     @endif
 </x-filament-panels::page>
