@@ -46,7 +46,7 @@ class FormBooking extends Page
         $this->availableCapster = [];
     }
 
-    public function updatedJamCapster($value)
+    public function updatedJam($value)
     {
         if ($value) {
             $this->availableCapster = Capster::whereDoesntHave('bookings', function ($query) use ($value) {
