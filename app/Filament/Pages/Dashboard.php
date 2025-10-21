@@ -14,4 +14,10 @@ class Dashboard extends Page
     {
         return Auth::user()?->roles->pluck('name')->contains('admin');
     }
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            \App\Filament\Widgets\TopCollectionChartWidget::class,
+        ];
+    }
 }
