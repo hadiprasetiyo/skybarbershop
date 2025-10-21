@@ -1,6 +1,6 @@
 <x-filament-panels::page>
     @if($this->modelPotongan)
-        <div class="bg-white p-6 rounded-xl shadow-lg max-w-lg mx-auto">
+        <div class="bg-white p-6 rounded-xl shadow-lg mx-auto min-w-[300px] max-w-[400px] w-full">
             <h2 class="text-xl font-bold mb-4">
                 Booking: {{ $this->modelPotongan->nama_model }}
             </h2>
@@ -21,7 +21,7 @@
                 {{-- Pilih Jam --}}
                 <div>
                     <label class="block font-medium mb-1">Pilih Jadwal</label>
-                    <select wire:model="jam" class="border rounded px-2 py-1 w-full">
+                    <select wire:model="jam" wire:change="loadCapster" class="border rounded px-2 py-1 w-full">
                         <option value="">-- pilih jadwal --</option>
                         @foreach ($availableSlots as $slot)
                             <option value="{{ $slot->id }}">
@@ -47,7 +47,7 @@
                         @endforeach
                     </select>
 
-                    <div wire:loading wire:target="jam" class="text-sm text-gray-500 mt-1">
+                    <div wire:loading wire:target="jam" class="text-sm text-blue-500 mt-1">
                         Memuat capster yang tersedia...
                     </div>
 
@@ -56,8 +56,9 @@
                     @endif
                 </div>
 
-                <x-filament::button type="submit" color="primary" class="w-full">
-                    Konfirmasi Booking
+                <x-filament::button type="submit" color="primary" class="w-full" wire:loading.attr="disabled">
+                    <span wire:loading.remove>Konfirmasi Booking</span>
+                    <span wire:loading>Memproses...</span>
                 </x-filament::button>
             </form>
         </div>

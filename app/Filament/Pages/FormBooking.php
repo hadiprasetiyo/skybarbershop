@@ -50,16 +50,17 @@ class FormBooking extends Page
         $this->availableCapster = collect();
     }
 
-    public function updatedJam($value)
+    public function loadCapster()
     {
-        if (!$value) {
-        $this->availableCapster = collect();
-        return;
-    }
+        $this->capster = null;
 
-            // ambil capster yang belum dibooking di jam itu
-        $this->availableCapster = Capster::whereDoesntHave('bookings', function ($q) use ($value) {
-            $q->where('jam_antrian_id', $value);
+        if (!$this->jam) {
+            $this->availableCapster = collect();
+            return;
+        }
+
+        $this->availableCapster = Capster::whereDoesntHave('bookings', function ($q) {
+            $q->where('jam_antrian_id', $this->jam);
         })->get();
     }
 
