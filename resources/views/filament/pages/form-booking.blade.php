@@ -12,14 +12,14 @@
             </div>
 
             <!-- Image dengan efek hover -->
-            <div class="relative mb-6 group">
+            <div class="relative mb-8 group">
                 <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-300"></div>
                 <img src="{{ asset('storage/'.$this->modelPotongan->gambar) }}" 
                      class="relative w-full h-56 object-cover rounded-2xl shadow-md transform group-hover:scale-[1.02] transition duration-300">
             </div>
 
             <!-- Info Cards -->
-            <div class="space-y-3 mb-6">
+            <div class="space-y-4 mb-6">
                 <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl border border-blue-100">
                     <div class="flex items-center justify-between">
                         <span class="text-sm font-medium text-gray-600">Harga</span>
