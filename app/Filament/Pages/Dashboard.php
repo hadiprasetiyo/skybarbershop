@@ -17,8 +17,9 @@ class Dashboard extends Page
     protected function getHeaderWidgets(): array
     {
         return [
-            \App\Filament\Widgets\TopCollectionChartWidget::class,
             \App\Filament\Widgets\TotalBookingWidget::class,
+            \App\Filament\Widgets\TopCollectionChartWidget::class,
+            \App\Filament\Widgets\RecentBookingActivityWidget::class,
         ];
     }
 }

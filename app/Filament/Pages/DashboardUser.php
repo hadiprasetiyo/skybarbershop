@@ -17,4 +17,12 @@ class DashboardUser extends Page
     {
         return Auth::user()?->roles->pluck('name')->contains('pengguna');
     }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            \App\Filament\Widgets\RiwayatBookingWidget::class,
+            \App\Filament\Widgets\TopCollectionChartWidget::class,
+        ];
+    }
 }
