@@ -56,6 +56,11 @@ class DataBookingResource extends Resource
                         fn ($record) => $record->tanggalAntrian->slot_tanggal . ' - ' . $record->slot_jam
                     )
                     ->required(),
+                
+                Select::make('capster_id')
+                    ->label('Capster')
+                    ->relationship('capster', 'name')
+                    ->required(),
 
                 Select::make('status')
                     ->label('Status')
@@ -88,6 +93,9 @@ class DataBookingResource extends Resource
 
                 TextColumn::make('jamAntrian.tanggalAntrian.slot_tanggal')
                     ->label('Tanggal'),
+
+                TextColumn::make('capster.name')
+                    ->label('Capster'),
 
                 TextColumn::make('status')
                     ->label('Status')

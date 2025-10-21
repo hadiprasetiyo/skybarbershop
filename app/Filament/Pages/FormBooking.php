@@ -3,13 +3,14 @@
 namespace App\Filament\Pages;
 
 use App\Models\Capster;
+use Filament\Pages\Page;
 use App\Models\JamAntrian;
 use App\Models\DataBooking;
 use App\Models\DataCollection;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Filament\Notifications\Notification;
-use Filament\Pages\Page;
-use Illuminate\Support\Collection;
+use App\Filament\Resources\UserBookingResource;
 
 class FormBooking extends Page
 {
@@ -103,5 +104,7 @@ class FormBooking extends Page
             ->title('Booking berhasil dibuat!')
             ->success()
             ->send();
+        
+        return redirect(UserBookingResource::getUrl('index'));
     }
 }
