@@ -11,14 +11,9 @@ class TotalBookingWidget extends BaseWidget
     protected function getStats(): array
     {
         $totalDataBooking = DataBooking::count();
-        $totalAmount = DataBooking::sum('jumlah');
         $monthlyDataBooking = DataBooking::whereMonth('tanggal', now()->month)
             ->whereYear('tanggal', now()->year)
             ->count();
-        
-        $monthlyAmount = DataBooking::whereMonth('tanggal', now()->month)
-            ->whereYear('tanggal', now()->year)
-            ->sum('jumlah');
             
         $pendingDataBooking = DataBooking::where('status', '1')->count();
         $confirmDataBooking = DataBooking::where('status', '2')->count();
@@ -27,12 +22,12 @@ class TotalBookingWidget extends BaseWidget
 
         return [
             Stat::make('Total Booking', $totalDataBooking)
-                ->description('Total: ' . number_format($totalAmount, 0, ',', '.'))
+                ->description('Total: ' . number_format($totalDataBooking, 0, ',', '.'))
                 ->descriptionIcon('heroicon-m-document-text')
                 ->color('info'),
 
             Stat::make('Booking Bulan Ini', $monthlyDataBooking)
-                ->description('Total: ' . number_format($monthlyAmount, 0, ',', '.'))
+                ->description('Total: ' . number_format($monthlyDataBooking, 0, ',', '.'))
                 ->descriptionIcon('heroicon-m-calendar-days')
                 ->color('info'),
 
