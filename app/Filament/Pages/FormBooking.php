@@ -2,13 +2,14 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\Capster;
 use Filament\Pages\Page;
 use App\Models\JamAntrian;
 use App\Models\DataBooking;
 use App\Models\DataCollection;
 use Illuminate\Support\Facades\Auth;
-use App\Filament\Resources\UserBookingResource;
 use Filament\Notifications\Notification;
+use App\Filament\Resources\UserBookingResource;
 
 class FormBooking extends Page
 {
@@ -18,6 +19,7 @@ class FormBooking extends Page
 
     public ?DataCollection $modelPotongan = null;
     public $availableSlots = [];
+    public $availableCapster = [];
     public $userId;
     public $userName;
 
@@ -39,20 +41,31 @@ class FormBooking extends Page
         $this->availableSlots = JamAntrian::with('tanggalAntrian')
             ->whereDoesntHave('bookings')
             ->get();
+
+        if ($this->jam) {
+            $this->availableCapster = Capster::whereDoesntHave('bookings', function ($query) {
+                $query->where('jam_antrian_id', $this->jam);
+            })->get();
+        } else {
+            $this->availableCapster = [];
+        }
     }
 
     public function saveBooking()
     {
         $this->validate([
             'jam' => 'required|exists:jam_antrian,id',
+            'capster' => 'required|exists:capsters,id',
         ]);
 
         $slot = JamAntrian::with('tanggalAntrian')->findOrFail($this->jam);
+        $capster = Capster::findOrFail($this->capster);
 
         DataBooking::create([
             'user_id' => $this->userId,
             'data_collection_id' => $this->modelPotongan->id,
             'jam_antrian_id' => $slot->id,
+            'capster_id' => $capster->id,
             'status' => '1',
         ]);
 

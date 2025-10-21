@@ -33,6 +33,18 @@
                         @endforeach
                     </select>
                 </div>
+                {{-- Pilih Capster --}}
+                <div>
+                    <label class="block font-medium">Pilih Capster</label>
+                    <select wire:model="capster" class="border rounded px-2 py-1 w-full">
+                        <option value="">-- pilih capster --</option>
+                        @foreach ($availableCapster as $capster)
+                            <option value="{{ $capster->id }}">
+                                {{ $capster->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
 
                 {{-- Submit Button --}}
                 <x-filament::button type="submit" color="primary">
