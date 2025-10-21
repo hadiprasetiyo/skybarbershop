@@ -36,14 +36,19 @@
                 {{-- Pilih Capster --}}
                 <div>
                     <label class="block font-medium">Pilih Capster</label>
-                    <select wire:model="capster" class="border rounded px-2 py-1 w-full">
+
+                    <select wire:model="capster" class="border rounded px-2 py-1 w-full" @disabled(empty($availableCapster))>
                         <option value="">-- pilih capster --</option>
-                        @foreach ($availableCapster as $capster)
-                            <option value="{{ $capster->id }}">
-                                {{ $capster->name }}
+                        @foreach ($availableCapster as $cap)
+                            <option value="{{ $cap->id }}">
+                                {{ $cap->name }}
                             </option>
                         @endforeach
                     </select>
+
+                    <div wire:loading wire:target="jam" class="text-sm text-gray-500 mt-1">
+                        Memuat capster yang tersedia...
+                    </div>
                 </div>
 
                 {{-- Submit Button --}}

@@ -25,6 +25,7 @@ class FormBooking extends Page
 
     // binding ke select option
     public $jam;
+    public $capster;
 
     public function mount(): void
     {
@@ -42,9 +43,14 @@ class FormBooking extends Page
             ->whereDoesntHave('bookings')
             ->get();
 
-        if ($this->jam) {
-            $this->availableCapster = Capster::whereDoesntHave('bookings', function ($query) {
-                $query->where('jam_antrian_id', $this->jam);
+        $this->availableCapster = [];
+    }
+
+    public function updatedJamCapster($value)
+    {
+        if ($value) {
+            $this->availableCapster = Capster::whereDoesntHave('bookings', function ($query) use ($value) {
+                $query->where('jam_antrian_id', $value);
             })->get();
         } else {
             $this->availableCapster = [];
