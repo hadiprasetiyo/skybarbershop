@@ -18,6 +18,7 @@ class Dashboard extends Page
     {
         return [
             \App\Filament\Widgets\TopCollectionChartWidget::class,
+            \App\Filament\Widgets\TotalBookingWidget::class,
         ];
     }
 }

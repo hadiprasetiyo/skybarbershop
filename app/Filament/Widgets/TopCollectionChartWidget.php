@@ -79,8 +79,6 @@ class TopCollectionChartWidget extends ChartWidget
                         'font' => ['size' => 12, 'weight' => '500'],
                         'color' => '#6b7280',
                     ],
-                    'categoryPercentage' => 1, // nilai kecil = jarak antar bar lebih lebar
-                    'barPercentage' => 0.8, // nilai kecil = bar lebih tipis
                 ],
                 'y' => [
                     'beginAtZero' => true,
